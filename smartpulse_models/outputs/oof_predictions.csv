@@ -1,0 +1,133 @@
+id,y_true,prob_logreg,prob_rf,gender_analysis,year_group,stream_group,residence_group
+R001,1,0.4675,0.492,Male,2nd year,Engineering,Hostel
+R002,0,0.7717,0.7385,Male,2nd year,Engineering,Hostel
+R003,1,0.3553,0.4188,Female,2nd year,Engineering,Hostel
+R004,0,0.7343,0.6362,Male,2nd year,Engineering,Hostel
+R005,0,0.4117,0.4699,Male,2nd year,Engineering,Hostel
+R006,0,0.5666,0.5065,Male,2nd year,Engineering,Hostel
+R007,1,0.5393,0.5582,Male,2nd year,Engineering,Hostel
+R008,0,0.4606,0.494,Male,1st year,Non-engineering,Hostel
+R009,1,0.5979,0.5505,Male,2nd year,Engineering,Hostel
+R010,1,0.8759,0.6904,Male,2nd year,Engineering,Hostel
+R011,0,0.4538,0.5095,Male,2nd year,Engineering,Hostel
+R012,0,0.1339,0.3081,Female,3rd year and above (incl. PG),Engineering,Home / PG-rented
+R013,1,0.7562,0.623,Male,2nd year,Engineering,Hostel
+R014,1,0.697,0.6405,Male,2nd year,Engineering,Hostel
+R015,1,0.8104,0.741,Male,2nd year,Engineering,Hostel
+R016,0,0.7956,0.5208,Male,2nd year,Engineering,Home / PG-rented
+R017,1,0.8494,0.683,Female,2nd year,Non-engineering,Home / PG-rented
+R018,0,0.6039,0.5308,Male,2nd year,Engineering,Hostel
+R019,1,0.5617,0.5027,Male,2nd year,Engineering,Hostel
+R020,1,0.569,0.4723,Male,2nd year,Engineering,Hostel
+R021,1,0.8597,0.5949,Male,2nd year,Engineering,Hostel
+R022,1,0.6619,0.5231,Male,2nd year,Engineering,Hostel
+R023,1,0.46,0.4516,Male,2nd year,Engineering,Hostel
+R025,1,0.8899,0.7295,Male,2nd year,Engineering,Hostel
+R026,0,0.5502,0.4885,Male,2nd year,Engineering,Hostel
+R027,1,0.6402,0.5187,Female,2nd year,Engineering,Hostel
+R028,0,0.75,0.5985,Male,2nd year,Engineering,Hostel
+R029,0,0.5722,0.4596,Male,2nd year,Engineering,Hostel
+R030,0,0.8249,0.6607,Male,2nd year,Engineering,Hostel
+R031,0,0.6527,0.5718,Male,2nd year,Engineering,Hostel
+R032,0,0.2246,0.2414,Male,2nd year,Engineering,Hostel
+R034,0,0.2071,0.3055,Male,3rd year and above (incl. PG),Non-engineering,Home / PG-rented
+R035,1,0.3399,0.4609,Male,2nd year,Engineering,Hostel
+R036,1,0.5085,0.5128,Male,2nd year,Engineering,Hostel
+R037,1,0.7412,0.5778,Male,3rd year and above (incl. PG),Engineering,Hostel
+R038,1,0.4594,0.5303,Male,2nd year,Engineering,Hostel
+R039,1,0.6192,0.5768,Male,2nd year,Engineering,Hostel
+R040,0,0.5105,0.5982,Male,2nd year,Non-engineering,Hostel
+R041,1,0.5882,0.5958,Male,2nd year,Engineering,Hostel
+R042,0,0.4621,0.5038,Male,2nd year,Engineering,Hostel
+R043,1,0.8086,0.6313,Male,2nd year,Engineering,Hostel
+R045,1,0.6836,0.6747,Male,2nd year,Engineering,Hostel
+R047,1,0.7116,0.7052,Male,2nd year,Non-engineering,Home / PG-rented
+R048,1,0.3181,0.4288,Female,2nd year,Non-engineering,Hostel
+R049,0,0.4095,0.4497,Male,1st year,Non-engineering,Hostel
+R050,0,0.6786,0.6772,Male,1st year,Engineering,Hostel
+R051,0,0.7232,0.5274,Male,2nd year,Engineering,Home / PG-rented
+R052,1,0.3997,0.4596,Male,2nd year,Engineering,Hostel
+R053,0,0.6954,0.6504,Male,2nd year,Engineering,Hostel
+R054,0,0.6445,0.6501,Female,2nd year,Non-engineering,Home / PG-rented
+R055,1,0.4982,0.5628,Male,2nd year,Engineering,Home / PG-rented
+R056,0,0.5537,0.597,Male,2nd year,Non-engineering,Hostel
+R057,0,0.579,0.6272,Male,1st year,Engineering,Hostel
+R058,1,0.8061,0.7236,Male,1st year,Engineering,Hostel
+R059,1,0.5213,0.5417,Male,2nd year,Engineering,Hostel
+R060,1,0.7058,0.6776,Male,2nd year,Engineering,Hostel
+R061,1,0.8673,0.6841,Male,2nd year,Engineering,Hostel
+R062,1,0.4186,0.5669,Male,1st year,Engineering,Hostel
+R063,1,0.8479,0.743,Male,2nd year,Engineering,Home / PG-rented
+R064,0,0.5388,0.5885,Male,2nd year,Engineering,Hostel
+R066,0,0.2193,0.353,Male,2nd year,Engineering,Hostel
+R067,0,0.3863,0.439,Male,2nd year,Engineering,Hostel
+R069,1,0.5485,0.5298,Male,2nd year,Engineering,Hostel
+R070,0,0.2488,0.3871,Female,1st year,Non-engineering,Home / PG-rented
+R071,0,0.3342,0.3992,Female,2nd year,Non-engineering,Home / PG-rented
+R072,1,0.781,0.6871,Female,2nd year,Engineering,Hostel
+R073,0,0.5307,0.3944,Male,2nd year,Engineering,Hostel
+R074,1,0.6423,0.5727,Male,2nd year,Engineering,Hostel
+R075,0,0.248,0.3826,Male,2nd year,Engineering,Hostel
+R076,0,0.3725,0.3753,Male,2nd year,Engineering,Hostel
+R077,1,0.798,0.6516,Male,2nd year,Non-engineering,Home / PG-rented
+R078,0,0.6294,0.5175,Male,2nd year,Engineering,Hostel
+R079,0,0.4664,0.45,Female,2nd year,Engineering,Hostel
+R080,0,0.3553,0.5589,Male,2nd year,Engineering,Hostel
+R081,0,0.5831,0.6043,Female,2nd year,Engineering,Hostel
+R082,1,0.7597,0.6928,Male,2nd year,Engineering,Home / PG-rented
+R083,1,0.6833,0.6441,Female,1st year,Engineering,Hostel
+R084,0,0.4069,0.3727,Male,2nd year,Engineering,Hostel
+R085,0,0.5086,0.5245,Male,2nd year,Engineering,Home / PG-rented
+R086,1,0.5046,0.4781,Female,2nd year,Non-engineering,Hostel
+R087,0,0.5808,0.4794,Male,2nd year,Engineering,Hostel
+R088,0,0.1846,0.2854,Female,2nd year,Non-engineering,Home / PG-rented
+R089,1,0.4112,0.5259,Female,2nd year,Engineering,Hostel
+R090,1,0.3987,0.3706,Female,2nd year,Engineering,Hostel
+R092,1,0.5305,0.5381,Male,2nd year,Engineering,Home / PG-rented
+R093,1,0.1954,0.424,Female,3rd year and above (incl. PG),Engineering,Home / PG-rented
+R094,1,0.3613,0.4124,Female,2nd year,Engineering,Hostel
+R095,1,0.7385,0.7063,Female,2nd year,Engineering,Hostel
+R096,1,0.5201,0.5872,Male,2nd year,Engineering,Hostel
+R097,1,0.7458,0.6321,Male,2nd year,Engineering,Hostel
+R098,1,0.4769,0.5113,Male,2nd year,Engineering,Hostel
+R099,1,0.3428,0.4052,Male,2nd year,Engineering,Hostel
+R100,0,0.8494,0.6398,Male,1st year,Engineering,Hostel
+R101,1,0.8433,0.6479,Female,1st year,Non-engineering,Home / PG-rented
+R102,1,0.5571,0.4708,Male,2nd year,Engineering,Hostel
+R103,0,0.8541,0.6925,Female,2nd year,Engineering,Hostel
+R104,1,0.7467,0.5213,Male,2nd year,Engineering,Hostel
+R105,0,0.4808,0.4537,Male,2nd year,Engineering,Home / PG-rented
+R106,1,0.7988,0.7356,Male,2nd year,Non-engineering,Hostel
+R107,0,0.6463,0.6062,Male,3rd year and above (incl. PG),Engineering,Hostel
+R108,1,0.7485,0.5931,Male,2nd year,Engineering,Hostel
+R109,1,0.272,0.5557,Male,1st year,Engineering,Hostel
+R110,0,0.8101,0.7215,Male,1st year,Engineering,Hostel
+R111,1,0.2442,0.5527,Male,1st year,Engineering,Hostel
+R112,0,0.6428,0.4351,Female,1st year,Non-engineering,Hostel
+R113,1,0.5943,0.4804,Female,3rd year and above (incl. PG),Engineering,Home / PG-rented
+R114,0,0.5873,0.4611,Female,1st year,Non-engineering,Hostel
+R115,1,0.2592,0.5927,Female,1st year,Non-engineering,Hostel
+R116,1,0.7486,0.7265,Female,2nd year,Non-engineering,Home / PG-rented
+R117,1,0.5066,0.497,Female,1st year,Non-engineering,Hostel
+R118,1,0.1857,0.505,Female,1st year,Non-engineering,Hostel
+R119,0,0.6226,0.7097,Female,1st year,Non-engineering,Home / PG-rented
+R120,0,0.1962,0.3955,Female,1st year,Non-engineering,Home / PG-rented
+R121,1,0.1556,0.275,Female,1st year,Non-engineering,Hostel
+R122,1,0.6174,0.6795,Female,1st year,Non-engineering,Hostel
+R123,0,0.1378,0.3442,Female,1st year,Non-engineering,Home / PG-rented
+R124,0,0.2613,0.3962,Female,1st year,Engineering,Hostel
+R125,1,0.2652,0.5022,Female,3rd year and above (incl. PG),Non-engineering,Home / PG-rented
+R126,0,0.4039,0.4955,Female,3rd year and above (incl. PG),Non-engineering,Home / PG-rented
+R127,0,0.3028,0.4532,Female,1st year,Non-engineering,Home / PG-rented
+R128,1,0.3033,0.3683,Female,1st year,Non-engineering,Home / PG-rented
+R129,1,0.5798,0.581,Female,3rd year and above (incl. PG),Non-engineering,Hostel
+R130,0,0.8201,0.7056,Female,3rd year and above (incl. PG),Non-engineering,Home / PG-rented
+R131,0,0.4077,0.4006,Female,1st year,Non-engineering,Home / PG-rented
+R133,0,0.207,0.4411,Female,1st year,Non-engineering,Hostel
+R134,0,0.6065,0.6444,Female,1st year,Non-engineering,Hostel
+R135,1,0.3394,0.3819,Female,3rd year and above (incl. PG),Engineering,Hostel
+R137,0,0.3335,0.5639,Female,1st year,Non-engineering,Home / PG-rented
+R138,1,0.5204,0.4493,Female,1st year,Non-engineering,Hostel
+R139,0,0.2485,0.3881,Female,3rd year and above (incl. PG),Engineering,Home / PG-rented
+R141,1,0.5007,0.5847,Female,1st year,Non-engineering,Home / PG-rented
+R142,0,0.3377,0.3862,Female,3rd year and above (incl. PG),Engineering,Home / PG-rented

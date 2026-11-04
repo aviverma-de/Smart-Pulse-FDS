@@ -1,0 +1,13 @@
+feature,posterior_mean,posterior_sd,hdi_3%,hdi_97%
+sleep_mid_hrs,0.1457,0.3522,-0.496,0.8137
+sleep_quality,0.3209,0.3735,-0.4058,0.9975
+bedtime_code,0.5101,0.3801,-0.188,1.2499
+screen_mid_hrs,-0.1331,0.3503,-0.8165,0.5031
+phone_bed_code,0.9138,0.3514,0.2544,1.5698
+exercise_days_mid,0.5376,0.3501,-0.1178,1.1967
+deadlines_code,0.1582,0.333,-0.4745,0.7655
+workload_code,1.1783,0.3341,0.568,1.8139
+performance_code,-0.7073,0.3265,-1.3289,-0.088
+performance_missing,0.2222,0.343,-0.4247,0.8579
+intercept,14.9743,0.3193,14.3681,15.5574
+sigma,3.6934,0.2396,3.2628,4.1562
