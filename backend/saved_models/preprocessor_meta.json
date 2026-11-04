@@ -1,0 +1,71 @@
+{
+  "features": [
+    "sleep_mid_hrs",
+    "sleep_quality",
+    "bedtime_code",
+    "screen_mid_hrs",
+    "phone_bed_code",
+    "exercise_days_mid",
+    "deadlines_code",
+    "workload_code",
+    "performance_code"
+  ],
+  "features_final": [
+    "sleep_mid_hrs",
+    "sleep_quality",
+    "bedtime_code",
+    "screen_mid_hrs",
+    "phone_bed_code",
+    "exercise_days_mid",
+    "deadlines_code",
+    "workload_code",
+    "performance_code",
+    "performance_missing"
+  ],
+  "perf_median": 2.0,
+  "means": {
+    "sleep_mid_hrs": 6.553030303030303,
+    "sleep_quality": 3.409090909090909,
+    "bedtime_code": 2.4015151515151514,
+    "screen_mid_hrs": 4.545454545454546,
+    "phone_bed_code": 3.3181818181818183,
+    "exercise_days_mid": 2.8106060606060606,
+    "deadlines_code": 1.5,
+    "workload_code": 2.272727272727273,
+    "performance_code": 2.4393939393939394,
+    "performance_missing": 0.09090909090909091
+  },
+  "stds": {
+    "sleep_mid_hrs": 1.0823262960877087,
+    "sleep_quality": 0.9124936318129423,
+    "bedtime_code": 0.7056036367498925,
+    "screen_mid_hrs": 1.9320409853691007,
+    "phone_bed_code": 0.7619570279200095,
+    "exercise_days_mid": 1.9024807399876287,
+    "deadlines_code": 0.712443511849015,
+    "workload_code": 0.5652957001872009,
+    "performance_code": 0.8639021387968747,
+    "performance_missing": 0.2874797872880344
+  },
+  "ols_intercept": 14.977272727272727,
+  "ols_coefs": {
+    "sleep_mid_hrs": 0.16149487704797633,
+    "sleep_quality": 0.3425747140933675,
+    "bedtime_code": 0.5302999103742223,
+    "screen_mid_hrs": -0.1542823124018682,
+    "phone_bed_code": 0.9480944638666052,
+    "exercise_days_mid": 0.5603693625291409,
+    "deadlines_code": 0.166511782112348,
+    "workload_code": 1.2109945659224186,
+    "performance_code": -0.7217040195019411,
+    "performance_missing": 0.23308663493908865
+  },
+  "n_samples": 132,
+  "target_class": "burnout_high",
+  "target_reg": "burnout_total",
+  "burnout_min": 5,
+  "burnout_max": 25,
+  "burnout_mean": 14.977272727272727,
+  "burnout_std": 3.9647421657368027,
+  "burnout_median": 15.0
+}

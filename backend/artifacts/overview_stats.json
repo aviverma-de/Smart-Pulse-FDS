@@ -1,0 +1,145 @@
+{
+  "n_students": 132,
+  "mean_burnout": 14.98,
+  "median_burnout": 15.0,
+  "std_burnout": 3.98,
+  "min_burnout": 5,
+  "max_burnout": 25,
+  "mean_stress": 11.66,
+  "std_stress": 2.35,
+  "mean_sleep": 6.55,
+  "pct_high_burnout": 53.8,
+  "significant_tests_count": 2,
+  "burnout_distribution": [
+    {
+      "range": "5.0 - 7.0",
+      "count": 1,
+      "bin_start": 5.0,
+      "bin_end": 7.0
+    },
+    {
+      "range": "7.0 - 9.0",
+      "count": 5,
+      "bin_start": 7.0,
+      "bin_end": 9.0
+    },
+    {
+      "range": "9.0 - 11.0",
+      "count": 11,
+      "bin_start": 9.0,
+      "bin_end": 11.0
+    },
+    {
+      "range": "11.0 - 13.0",
+      "count": 22,
+      "bin_start": 11.0,
+      "bin_end": 13.0
+    },
+    {
+      "range": "13.0 - 15.0",
+      "count": 22,
+      "bin_start": 13.0,
+      "bin_end": 15.0
+    },
+    {
+      "range": "15.0 - 17.0",
+      "count": 27,
+      "bin_start": 15.0,
+      "bin_end": 17.0
+    },
+    {
+      "range": "17.0 - 19.0",
+      "count": 18,
+      "bin_start": 17.0,
+      "bin_end": 19.0
+    },
+    {
+      "range": "19.0 - 21.0",
+      "count": 13,
+      "bin_start": 19.0,
+      "bin_end": 21.0
+    },
+    {
+      "range": "21.0 - 23.0",
+      "count": 9,
+      "bin_start": 21.0,
+      "bin_end": 23.0
+    },
+    {
+      "range": "23.0 - 25.0",
+      "count": 4,
+      "bin_start": 23.0,
+      "bin_end": 25.0
+    }
+  ],
+  "stress_distribution": [
+    {
+      "range": "5.0 - 6.8",
+      "count": 1,
+      "bin_start": 5.0,
+      "bin_end": 6.8
+    },
+    {
+      "range": "6.8 - 8.5",
+      "count": 12,
+      "bin_start": 6.8,
+      "bin_end": 8.5
+    },
+    {
+      "range": "8.5 - 10.2",
+      "count": 29,
+      "bin_start": 8.5,
+      "bin_end": 10.2
+    },
+    {
+      "range": "10.2 - 12.0",
+      "count": 20,
+      "bin_start": 10.2,
+      "bin_end": 12.0
+    },
+    {
+      "range": "12.0 - 13.8",
+      "count": 46,
+      "bin_start": 12.0,
+      "bin_end": 13.8
+    },
+    {
+      "range": "13.8 - 15.5",
+      "count": 17,
+      "bin_start": 13.8,
+      "bin_end": 15.5
+    },
+    {
+      "range": "15.5 - 17.2",
+      "count": 6,
+      "bin_start": 15.5,
+      "bin_end": 17.2
+    },
+    {
+      "range": "17.2 - 19.0",
+      "count": 1,
+      "bin_start": 17.2,
+      "bin_end": 19.0
+    }
+  ],
+  "stress_timeline": [
+    {
+      "stage": "Beginning",
+      "label": "Start of Semester",
+      "mean": 1.97,
+      "sd": 1.0
+    },
+    {
+      "stage": "Middle",
+      "label": "Midterms / Projects",
+      "mean": 3.06,
+      "sd": 0.92
+    },
+    {
+      "stage": "Current",
+      "label": "Current Status",
+      "mean": 3.2,
+      "sd": 1.21
+    }
+  ]
+}

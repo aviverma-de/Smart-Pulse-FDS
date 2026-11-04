@@ -1,0 +1,86 @@
+[
+  {
+    "feature": "sleep_mid_hrs",
+    "posterior_mean": 0.1457,
+    "posterior_sd": 0.3522,
+    "hdi_3%": -0.496,
+    "hdi_97%": 0.8137
+  },
+  {
+    "feature": "sleep_quality",
+    "posterior_mean": 0.3209,
+    "posterior_sd": 0.3735,
+    "hdi_3%": -0.4058,
+    "hdi_97%": 0.9975
+  },
+  {
+    "feature": "bedtime_code",
+    "posterior_mean": 0.5101,
+    "posterior_sd": 0.3801,
+    "hdi_3%": -0.188,
+    "hdi_97%": 1.2499
+  },
+  {
+    "feature": "screen_mid_hrs",
+    "posterior_mean": -0.1331,
+    "posterior_sd": 0.3503,
+    "hdi_3%": -0.8165,
+    "hdi_97%": 0.5031
+  },
+  {
+    "feature": "phone_bed_code",
+    "posterior_mean": 0.9138,
+    "posterior_sd": 0.3514,
+    "hdi_3%": 0.2544,
+    "hdi_97%": 1.5698
+  },
+  {
+    "feature": "exercise_days_mid",
+    "posterior_mean": 0.5376,
+    "posterior_sd": 0.3501,
+    "hdi_3%": -0.1178,
+    "hdi_97%": 1.1967
+  },
+  {
+    "feature": "deadlines_code",
+    "posterior_mean": 0.1582,
+    "posterior_sd": 0.333,
+    "hdi_3%": -0.4745,
+    "hdi_97%": 0.7655
+  },
+  {
+    "feature": "workload_code",
+    "posterior_mean": 1.1783,
+    "posterior_sd": 0.3341,
+    "hdi_3%": 0.568,
+    "hdi_97%": 1.8139
+  },
+  {
+    "feature": "performance_code",
+    "posterior_mean": -0.7073,
+    "posterior_sd": 0.3265,
+    "hdi_3%": -1.3289,
+    "hdi_97%": -0.088
+  },
+  {
+    "feature": "performance_missing",
+    "posterior_mean": 0.2222,
+    "posterior_sd": 0.343,
+    "hdi_3%": -0.4247,
+    "hdi_97%": 0.8579
+  },
+  {
+    "feature": "intercept",
+    "posterior_mean": 14.9743,
+    "posterior_sd": 0.3193,
+    "hdi_3%": 14.3681,
+    "hdi_97%": 15.5574
+  },
+  {
+    "feature": "sigma",
+    "posterior_mean": 3.6934,
+    "posterior_sd": 0.2396,
+    "hdi_3%": 3.2628,
+    "hdi_97%": 4.1562
+  }
+]

@@ -1,0 +1,161 @@
+[
+  {
+    "id": "stress_stages",
+    "title": "Semester Progression vs. Perceived Stress",
+    "research_question": "Does student stress significantly change across semester stages?",
+    "hypothesis": "Perceived stress differs across the beginning, middle, and current phases of the semester.",
+    "test_name": "Friedman Test (Repeated Measures)",
+    "statistic": 108.425,
+    "p_value": 2.8562e-24,
+    "effect_size": 0.411,
+    "effect_size_name": "Kendall's W",
+    "significant": true,
+    "conclusion": "Stress escalated significantly from semester start (1.97) through midterm (3.06) to current (3.20) (\u03c7\u00b2 = 108.43, p < 0.001, W = 0.411).",
+    "chart_data": [
+      {
+        "stage": "Beginning",
+        "label": "Start of Semester",
+        "mean": 1.97,
+        "sd": 1.0
+      },
+      {
+        "stage": "Middle",
+        "label": "Midterms / Projects",
+        "mean": 3.06,
+        "sd": 0.92
+      },
+      {
+        "stage": "Current",
+        "label": "Current Status",
+        "mean": 3.2,
+        "sd": 1.21
+      }
+    ]
+  },
+  {
+    "id": "workload_burnout",
+    "title": "Academic Workload vs. Burnout Risk",
+    "research_question": "Is perceived academic workload associated with student burnout risk?",
+    "hypothesis": "Students reporting heavy or overwhelming workload have a higher likelihood of high burnout.",
+    "test_name": "Pearson's Chi-Square Test of Independence",
+    "statistic": 11.461,
+    "p_value": 0.000711,
+    "effect_size": 0.295,
+    "effect_size_name": "Cramer's V",
+    "odds_ratio": 4.314,
+    "significant": true,
+    "conclusion": "Perceived academic workload is strongly associated with high burnout risk (\u03c7\u00b2 = 11.461, p = 0.000711, Cramer's V = 0.295). Students with heavy/overwhelming workloads have 4.31 times higher odds of experiencing high burnout.",
+    "chart_data": [
+      {
+        "category": "Light / Manageable",
+        "total": 96,
+        "high_burnout_pct": 44.8
+      },
+      {
+        "category": "Heavy / Overwhelming",
+        "total": 36,
+        "high_burnout_pct": 77.8
+      }
+    ]
+  },
+  {
+    "id": "phone_burnout",
+    "title": "Bedtime Phone Usage vs. Burnout",
+    "research_question": "Is bedtime smartphone usage associated with burnout risk?",
+    "hypothesis": "Frequent phone use before bed is associated with higher burnout levels.",
+    "test_name": "Pearson's Chi-Square Test",
+    "statistic": 3.225,
+    "p_value": 0.0725,
+    "effect_size": 0.156,
+    "effect_size_name": "Cramer's V",
+    "significant": false,
+    "conclusion": "Bedtime smartphone habits show a modest trend toward higher burnout that does not reach statistical significance at \u03b1 = 0.05 (\u03c7\u00b2 = 3.225, p = 0.0725, V = 0.156).",
+    "chart_data": [
+      {
+        "category": "Never / Sometimes",
+        "total": 22,
+        "high_burnout_pct": 36.4
+      },
+      {
+        "category": "Usually / Always",
+        "total": 110,
+        "high_burnout_pct": 57.3
+      }
+    ]
+  },
+  {
+    "id": "exam_performance_burnout",
+    "title": "Exam Performance vs. Expectations",
+    "research_question": "Does recent exam performance relative to expectations relate to burnout?",
+    "hypothesis": "Students performing below expectations exhibit higher burnout risk.",
+    "test_name": "Mann-Whitney U Test",
+    "statistic": 1444.0,
+    "p_value": 0.0622,
+    "effect_size": 0.144,
+    "effect_size_name": "Cramer's V",
+    "significant": false,
+    "conclusion": "Underperforming relative to personal expectations shows an elevated burnout trend, though falling slightly short of \u03b1 = 0.05 threshold (U = 1444.0, p = 0.0622).",
+    "chart_data": [
+      {
+        "category": "Below Expectations",
+        "total": 64,
+        "high_burnout_pct": 62.5
+      },
+      {
+        "category": "Expected or Above",
+        "total": 56,
+        "high_burnout_pct": 48.2
+      }
+    ]
+  },
+  {
+    "id": "exercise_burnout",
+    "title": "Physical Activity Frequency vs. Burnout",
+    "research_question": "Is weekly physical exercise frequency associated with reduced burnout?",
+    "hypothesis": "Regular exercise (3+ days/week) is associated with lower burnout rates.",
+    "test_name": "Pearson's Chi-Square Test",
+    "statistic": 1.914,
+    "p_value": 0.1665,
+    "effect_size": 0.12,
+    "effect_size_name": "Cramer's V",
+    "significant": false,
+    "conclusion": "Exercise frequency alone does not show a statistically significant protective association with burnout risk in this sample (\u03c7\u00b2 = 1.914, p = 0.1665).",
+    "chart_data": [
+      {
+        "category": "0 - 2 days/week",
+        "total": 65,
+        "high_burnout_pct": 47.7
+      },
+      {
+        "category": "3+ days/week",
+        "total": 67,
+        "high_burnout_pct": 59.7
+      }
+    ]
+  },
+  {
+    "id": "gender_burnout",
+    "title": "Gender Identity vs. Burnout Prevalence",
+    "research_question": "Does student burnout prevalence differ significantly by gender?",
+    "hypothesis": "Burnout rates differ between male and female students.",
+    "test_name": "Pearson's Chi-Square Test",
+    "statistic": 0.017,
+    "p_value": 0.8976,
+    "effect_size": 0.011,
+    "effect_size_name": "Cramer's V",
+    "significant": false,
+    "conclusion": "Burnout prevalence does not differ significantly between male (54.2%) and female (53.1%) students (\u03c7\u00b2 = 0.017, p = 0.8976), indicating uniform vulnerability across genders.",
+    "chart_data": [
+      {
+        "category": "Female (n=49)",
+        "total": 49,
+        "high_burnout_pct": 53.1
+      },
+      {
+        "category": "Male (n=83)",
+        "total": 83,
+        "high_burnout_pct": 54.2
+      }
+    ]
+  }
+]
