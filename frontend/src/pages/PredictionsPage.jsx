@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell, ReferenceLine } from 'recharts';
-import { BrainCircuit, ArrowRight, ShieldCheck, HeartPulse, SlidersHorizontal, FileText, CheckCircle2 } from 'lucide-react';
+import { BrainCircuit, ArrowRight, ShieldCheck, HeartPulse, SlidersHorizontal, FileText, CheckCircle2, Copy, Check, Trash2, Send } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import Card from '../components/Card';
 import RiskBadge from '../components/RiskBadge';
 import Disclaimer from '../components/Disclaimer';
+import { submitFeedback, deleteStudentData } from '../utils/api';
 
 export default function PredictionsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
+
+  // Student feedback state
+  const [agreement, setAgreement] = useState(null); // 'Yes' | 'No' | 'Not sure'
+  const [scoreFeelsRight, setScoreFeelsRight] = useState(null);
+  const [comment, setComment] = useState('');
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [submittingFeedback, setSubmittingFeedback] = useState(false);
+
+  // Return code and privacy state
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [deletionMessage, setDeletionMessage] = useState(null);
 
   useEffect(() => {
     // Check location state first, then fallback to sessionStorage
@@ -54,13 +66,14 @@ export default function PredictionsPage() {
   const probHigh = (prediction.probabilities?.high ?? 0.5) * 100;
   const probLow = (prediction.probabilities?.low ?? 0.5) * 100;
 
-  // Chart data for probabilities
+  const returnCode = prediction.return_code || sessionStorage.getItem('smartpulse_return_code');
+  const anonId = prediction.anon_id || sessionStorage.getItem('smartpulse_anon_id');
+
   const probData = [
     { name: 'Low Risk', probability: Math.round(probLow * 10) / 10, fill: '#10B981' },
     { name: 'High Risk', probability: Math.round(probHigh * 10) / 10, fill: '#EF4444' },
   ];
 
-  // Feature attributions data for horizontal bar chart
   const contribData = (explanation.contributions || [])
     .slice(0, 8)
     .map((c) => ({
@@ -68,6 +81,47 @@ export default function PredictionsPage() {
       contribution: c.contribution,
       direction: c.direction,
     }));
+
+  const handleCopyCode = () => {
+    if (!returnCode) return;
+    navigator.clipboard.writeText(returnCode);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
+  };
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    if (!agreement) return;
+    setSubmittingFeedback(true);
+    try {
+      await submitFeedback({
+        return_code: returnCode,
+        prediction_id: prediction.prediction_id,
+        agreement: agreement,
+        score_feels_right: scoreFeelsRight,
+        comment: comment.trim() || null,
+      });
+      setFeedbackSubmitted(true);
+    } catch (err) {
+      console.error('Feedback submission error:', err);
+    } finally {
+      setSubmittingFeedback(false);
+    }
+  };
+
+  const handleDeleteData = async () => {
+    if (!anonId && !returnCode) return;
+    if (!window.confirm('Are you sure you want to delete your anonymous research record? This cannot be undone.')) return;
+    try {
+      await deleteStudentData(anonId || returnCode);
+      sessionStorage.removeItem('smartpulse_assessment');
+      sessionStorage.removeItem('smartpulse_return_code');
+      sessionStorage.removeItem('smartpulse_anon_id');
+      setDeletionMessage('Your record and all associated predictions have been permanently deleted.');
+    } catch (err) {
+      alert(err.message || 'Failed to delete record.');
+    }
+  };
 
   return (
     <PageTransition className="max-w-5xl mx-auto px-4 py-8 space-y-8">
@@ -80,9 +134,15 @@ export default function PredictionsPage() {
           AI Burnout Risk Prediction
         </h1>
         <p className="text-xs sm:text-sm text-slate-400 mt-1">
-          Model: {prediction.model_used}
+          Model: {prediction.model_used} • Version: <span className="text-teal-300 font-bold">{prediction.model_version || 'v1.0'}</span>
         </p>
       </div>
+
+      {deletionMessage && (
+        <div className="p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs">
+          {deletionMessage}
+        </div>
+      )}
 
       {/* Main Results Hero Card */}
       <Card className="p-6 sm:p-8 border-teal-500/30 shadow-xl shadow-teal-500/5">
@@ -162,6 +222,141 @@ export default function PredictionsPage() {
           </div>
         </div>
       </Card>
+
+      {/* STUDENT FEEDBACK CARD (Subjective, Not Ground Truth) */}
+      <Card
+        title="Student Feedback"
+        subtitle="Help researchers calibrate our models. Labelled 'not ground truth' — never replaces verified actuals."
+      >
+        {!returnCode ? (
+          <p className="text-xs text-slate-400">You did not opt in to anonymous research storage, so feedback is not stored.</p>
+        ) : feedbackSubmitted ? (
+          <div className="p-4 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-300 text-xs flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" />
+            <span>Thank you for your feedback! It has been stored separately under subjective metrics.</span>
+          </div>
+        ) : (
+          <form onSubmit={handleFeedbackSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-white block">
+                How well does this describe your current condition?
+              </label>
+              <div className="flex gap-2">
+                {['Yes', 'No', 'Not sure'].map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setAgreement(option)}
+                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      agreement === option
+                        ? 'bg-teal-500 text-slate-950 font-bold'
+                        : 'bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300'
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-white block">
+                Does the predicted score feel about right? (Optional)
+              </label>
+              <div className="flex gap-2">
+                {['Yes', 'No', 'Not sure'].map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setScoreFeelsRight(option)}
+                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      scoreFeelsRight === option
+                        ? 'bg-teal-500 text-slate-950 font-bold'
+                        : 'bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300'
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs text-slate-400 block">
+                Optional comment:
+              </label>
+              <input
+                type="text"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="e.g. My midterm schedule was unusually intense this week"
+                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-teal-500"
+              />
+            </div>
+
+            <div className="flex items-center justify-between pt-2">
+              <span className="text-[10px] text-slate-400 italic">
+                Subjective feedback — stored separately, not ground truth.
+              </span>
+              <button
+                type="submit"
+                disabled={!agreement || submittingFeedback}
+                className="px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-50 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Submit Feedback</span>
+              </button>
+            </div>
+          </form>
+        )}
+      </Card>
+
+      {/* ANONYMOUS RETURN CODE & OUTCOME CHECK CARD */}
+      {returnCode && <Card
+        title="Follow-Up: Verified Burnout Outcome"
+        subtitle="Independent verification is required to measure ground truth and improve models."
+      >
+        <div className="space-y-4">
+          <p className="text-xs text-slate-300 leading-relaxed">
+            Your prediction has been registered with an anonymous return code. Later this semester (e.g. in 1-2 weeks), complete an independent 5-item burnout check to establish verified ground truth.
+          </p>
+
+          <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+                Your Anonymous Return Code
+              </span>
+              <code className="text-lg font-black text-teal-300 tracking-wider">{returnCode}</code>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={handleCopyCode}
+                className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-xs text-white font-semibold flex items-center gap-1.5 transition-all"
+              >
+                {copiedCode ? <Check className="w-3.5 h-3.5 text-teal-400" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedCode ? 'Copied' : 'Copy Code'}</span>
+              </button>
+              <Link
+                to="/outcome-check"
+                className="px-4 py-1.5 rounded-lg bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1"
+              >
+                <span>Outcome Check →</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-white/10">
+            <span>Want to delete your anonymous research record?</span>
+            <button
+              onClick={handleDeleteData}
+              className="text-rose-400 hover:text-rose-300 underline flex items-center gap-1"
+            >
+              <Trash2 className="w-3 h-3" />
+              <span>Delete My Record</span>
+            </button>
+          </div>
+        </div>
+      </Card>}
 
       {/* Why This Prediction? Attribution Section */}
       <Card

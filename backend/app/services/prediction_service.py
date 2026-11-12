@@ -38,6 +38,52 @@ def predict_category(input_data: AssessmentInput) -> PredictionResponse:
     category = "High Risk" if pred_class == 1 else "Low Risk"
     risk_label = "Elevated Burnout Risk" if pred_class == 1 else "Low / Baseline Risk"
 
+    pred_id = None
+    ret_code = input_data.return_code
+    anon_id = input_data.anon_id
+
+    # If consented student return_code or anon_id is present, store prediction linked to assessment
+    if ret_code or anon_id:
+        try:
+            from ..db import SessionLocal, Student, Assessment, Prediction
+            import json
+            db = SessionLocal()
+            try:
+                student = None
+                if ret_code:
+                    student = db.query(Student).filter_by(return_code=ret_code).first()
+                if not student and anon_id:
+                    student = db.query(Student).filter_by(id=anon_id).first()
+
+                if student:
+                    ret_code = student.return_code
+                    anon_id = student.id
+                    # Record assessment
+                    assessment = Assessment(
+                        student_id=student.id,
+                        inputs_json=json.dumps(input_data.model_dump(exclude={"anon_id", "return_code"}))
+                    )
+                    db.add(assessment)
+                    db.flush()
+
+                    # Record prediction
+                    score_result = predict_score(input_data)
+                    pred_record = Prediction(
+                        assessment_id=assessment.id,
+                        student_id=student.id,
+                        model_version=container.active_version,
+                        category=category,
+                        probs=json.dumps({"low": round(prob_low, 4), "high": round(prob_high, 4)}),
+                        score=score_result.predicted_score
+                    )
+                    db.add(pred_record)
+                    db.commit()
+                    pred_id = pred_record.id
+            finally:
+                db.close()
+        except Exception as e:
+            print("Warning: Failed to persist prediction record:", e)
+
     return PredictionResponse(
         category=category,
         risk_label=risk_label,
@@ -45,9 +91,13 @@ def predict_category(input_data: AssessmentInput) -> PredictionResponse:
             "low": round(prob_low, 4),
             "high": round(prob_high, 4)
         },
-        model_used="Random Forest Classifier (500 trees, 50-fold RepeatedStratifiedKFold evaluated)",
+        model_used=f"Random Forest Classifier ({container.active_version})",
         threshold=0.5,
-        disclaimer=config.DISCLAIMER_TEXT
+        disclaimer=config.DISCLAIMER_TEXT,
+        model_version=container.active_version,
+        prediction_id=pred_id,
+        return_code=ret_code,
+        anon_id=anon_id
     )
 
 def predict_score(input_data: AssessmentInput) -> ScoreResponse:
@@ -86,6 +136,26 @@ def predict_score(input_data: AssessmentInput) -> ScoreResponse:
 
     # Optional stress calculation
     calc_stress = compute_stress_total(input_data)
+
+    if input_data.return_code or input_data.anon_id:
+        try:
+            from ..db import SessionLocal, Student, Prediction
+            db = SessionLocal()
+            try:
+                st = None
+                if input_data.return_code:
+                    st = db.query(Student).filter_by(return_code=input_data.return_code).first()
+                if not st and input_data.anon_id:
+                    st = db.query(Student).filter_by(id=input_data.anon_id).first()
+                if st:
+                    pred = db.query(Prediction).filter_by(student_id=st.id).order_by(Prediction.id.desc()).first()
+                    if pred:
+                        pred.score = round(score_clamped, 2)
+                        db.commit()
+            finally:
+                db.close()
+        except Exception:
+            pass
 
     return ScoreResponse(
         predicted_score=round(score_clamped, 2),

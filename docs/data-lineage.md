@@ -1,5 +1,14 @@
 # SmartPulse — Data Lineage & Provenance Audit Table
 
+## 0. Validation Center and Retraining Provenance
+
+- Live classification actuals are the `measured_category` values from verified five-item follow-up outcomes, scored as High when the sum is at least 15 and Low otherwise. Predictions are joined by assessment ID. Only records with `is_demo=false` are included by default.
+- Live regression actuals use the same measured five-item sum; predictions use the score saved with the assessment's prediction. Rows with no saved prediction score are omitted from regression metrics and do not affect classification counts.
+- Confidence intervals and sample counts are computed from the rows returned by those joins. With no measured outcomes, the API returns “Not yet established (n=0)”; no live validation values are pre-filled or inferred from historical cross-validation.
+- Training provenance is 105 original training rows plus consented, verified, non-demo follow-ups that have a linked assessment. The 27-row original held-out partition in `backend/retraining/frozen_test_set.json` is excluded from candidate training and used for candidate/current evaluation only. Demo rows can be displayed for UI demonstration but never enter training.
+- Retraining reports record the evaluated candidate and decision under `docs/retraining-reports/`. A “promoted” status is a result of the configured same-test comparison, not a claim of general or causal improvement.
+- Historical figures in sections 1–5 below describe the original coursework analysis and are separate from live Validation Center metrics.
+
 Every single metric, test statistic, p-value, chart figure, and prediction displayed across SmartPulse is traced to its exact mathematical origin below. **Zero numbers are hardcoded or fabricated.**
 
 ---

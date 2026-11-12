@@ -1,14 +1,15 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Activity, LayoutDashboard, ClipboardCheck, BrainCircuit, SlidersHorizontal, HeartHandshake, FileText, ChartNoAxesColumn } from 'lucide-react';
+import { Activity, LayoutDashboard, ClipboardCheck, BrainCircuit, SlidersHorizontal, HeartHandshake, FileText, ChartNoAxesColumn, ShieldCheck, CheckSquare } from 'lucide-react';
 
 const navLinks = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/assessment', label: 'Assessment', icon: ClipboardCheck },
   { to: '/predictions', label: 'AI Prediction', icon: BrainCircuit },
   { to: '/estimator', label: 'What-if Simulator', icon: SlidersHorizontal },
+  { to: '/outcome-check', label: 'Outcome Check', icon: CheckSquare },
+  { to: '/validation', label: 'Validation Center', icon: ShieldCheck },
   { to: '/report', label: 'Statistical Insights', icon: ChartNoAxesColumn },
-  { to: '/predictions', label: 'Model Performance', icon: Activity },
   { to: '/recommendations', label: 'Recommendations', icon: HeartHandshake },
 ];
 

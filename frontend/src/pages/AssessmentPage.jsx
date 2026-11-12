@@ -17,26 +17,41 @@ import {
   PSS_OPTIONS,
   DEFAULT_ASSESSMENT
 } from '../utils/constants';
-import { predictCategory, predictScore, explainPrediction } from '../utils/api';
+import { predictCategory, predictScore, explainPrediction, submitConsent } from '../utils/api';
 
 export default function AssessmentPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState(DEFAULT_ASSESSMENT);
+  const [consent, setConsent] = useState(false);
+  const [answered, setAnswered] = useState(() => new Set());
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
   const totalSteps = 4;
 
   const handleChange = (field, val) => {
+    setAnswered((prev) => new Set(prev).add(field));
     setFormData((prev) => ({
       ...prev,
       [field]: val,
     }));
   };
 
+  const requiredByStep = {
+    1: ['sleep_mid_hrs', 'sleep_quality', 'bedtime_code'],
+    2: ['screen_mid_hrs', 'phone_bed_code'],
+    3: ['workload_code', 'exercise_days_mid', 'deadlines_code', 'performance_code'],
+    4: ['pss1_no_control', 'pss2_confident', 'pss3_going_my_way', 'pss4_piling_up'],
+  };
+  const canContinue = requiredByStep[step].every((field) => answered.has(field));
+
   const handleNext = () => {
     setError(null);
+    if (!canContinue) {
+      setError('Please choose an answer for each item on this step before continuing.');
+      return;
+    }
     if (step < totalSteps) {
       setStep(step + 1);
     }
@@ -51,15 +66,32 @@ export default function AssessmentPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!canContinue) {
+      setError('Please choose an answer for each stress item before submitting.');
+      return;
+    }
     setSubmitting(true);
     setError(null);
 
     try {
+      let submissionData = { ...formData };
+      if (consent) {
+        try {
+          const consentRes = await submitConsent(true);
+          submissionData.anon_id = consentRes.anon_id;
+          submissionData.return_code = consentRes.return_code;
+          sessionStorage.setItem('smartpulse_return_code', consentRes.return_code);
+          sessionStorage.setItem('smartpulse_anon_id', consentRes.anon_id);
+        } catch (cErr) {
+          console.warn('Consent registration skipped:', cErr);
+        }
+      }
+
       // Execute category prediction, continuous score estimation, and attribution in parallel
       const [categoryRes, scoreRes, explainRes] = await Promise.all([
-        predictCategory(formData),
-        predictScore(formData),
-        explainPrediction(formData),
+        predictCategory(submissionData),
+        predictScore(submissionData),
+        explainPrediction(submissionData),
       ]);
 
       const assessmentResults = {
@@ -99,7 +131,7 @@ export default function AssessmentPage() {
           Lifestyle & Academic Pressure Assessment
         </h1>
         <p className="text-xs sm:text-sm text-slate-400 mt-1">
-          Step {step} of {totalSteps}: Answer honestly. Responses are processed locally in-memory.
+          Step {step} of {totalSteps}: Answer honestly. Anonymous research storage is optional.
         </p>
       </div>
 
@@ -169,6 +201,7 @@ export default function AssessmentPage() {
                 </label>
                 <select
                   value={formData.sleep_mid_hrs}
+                  onClick={() => setAnswered((prev) => new Set(prev).add('sleep_mid_hrs'))}
                   onChange={(e) => handleChange('sleep_mid_hrs', parseFloat(e.target.value))}
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-teal-400 transition-colors"
                 >
@@ -211,6 +244,7 @@ export default function AssessmentPage() {
                 </label>
                 <select
                   value={formData.bedtime_code}
+                  onClick={() => setAnswered((prev) => new Set(prev).add('bedtime_code'))}
                   onChange={(e) => handleChange('bedtime_code', parseInt(e.target.value, 10))}
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-teal-400 transition-colors"
                 >
@@ -239,6 +273,7 @@ export default function AssessmentPage() {
                 </label>
                 <select
                   value={formData.screen_mid_hrs}
+                  onClick={() => setAnswered((prev) => new Set(prev).add('screen_mid_hrs'))}
                   onChange={(e) => handleChange('screen_mid_hrs', parseFloat(e.target.value))}
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-teal-400 transition-colors"
                 >
@@ -315,6 +350,7 @@ export default function AssessmentPage() {
                 </label>
                 <select
                   value={formData.exercise_days_mid}
+                  onClick={() => setAnswered((prev) => new Set(prev).add('exercise_days_mid'))}
                   onChange={(e) => handleChange('exercise_days_mid', parseFloat(e.target.value))}
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-teal-400 transition-colors"
                 >
@@ -333,6 +369,7 @@ export default function AssessmentPage() {
                 </label>
                 <select
                   value={formData.deadlines_code}
+                  onClick={() => setAnswered((prev) => new Set(prev).add('deadlines_code'))}
                   onChange={(e) => handleChange('deadlines_code', parseInt(e.target.value, 10))}
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-teal-400 transition-colors"
                 >
@@ -351,6 +388,7 @@ export default function AssessmentPage() {
                 </label>
                 <select
                   value={formData.performance_code ?? 'none'}
+                  onClick={() => setAnswered((prev) => new Set(prev).add('performance_code'))}
                   onChange={(e) => {
                     const val = e.target.value === 'none' ? null : parseFloat(e.target.value);
                     handleChange('performance_code', val);
@@ -478,6 +516,29 @@ export default function AssessmentPage() {
             </div>
           )}
 
+          {/* Optional Consent Step on Step 4 */}
+          {step === totalSteps && (
+            <div className="p-4 rounded-xl bg-teal-500/10 border border-teal-500/20 space-y-2 mt-4">
+              <label className="flex items-start gap-3 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={consent}
+                  onChange={(e) => setConsent(e.target.checked)}
+                  className="mt-1 w-4 h-4 rounded accent-teal-500"
+                />
+                <div className="text-xs">
+                  <span className="font-bold text-white block">
+                    Optional: Consent to Anonymous Research Data Storage
+                  </span>
+                  <span className="text-slate-300 block mt-0.5 leading-relaxed">
+                    Allow anonymous storage of your assessment inputs to track semester wellness trends.
+                    You will receive an anonymous return code and can delete your record at any time.
+                  </span>
+                </div>
+              </label>
+            </div>
+          )}
+
           {/* Navigation Buttons */}
           <div className="flex items-center justify-between pt-6 border-t border-white/10">
             {step > 1 ? (
@@ -497,6 +558,7 @@ export default function AssessmentPage() {
               <button
                 type="button"
                 onClick={handleNext}
+                disabled={!canContinue}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold shadow-md shadow-teal-500/20 transition-all hover:scale-105"
               >
                 <span>Continue</span>
@@ -505,7 +567,7 @@ export default function AssessmentPage() {
             ) : (
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || !canContinue}
                 className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-400 hover:from-teal-400 hover:to-cyan-300 text-slate-950 text-xs sm:text-sm font-extrabold shadow-lg shadow-teal-500/25 transition-all hover:scale-105 disabled:opacity-50"
               >
                 <Sparkles className="w-4 h-4" />

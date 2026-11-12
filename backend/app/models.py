@@ -64,6 +64,10 @@ class AssessmentInput(BaseModel):
     pss3_going_my_way: Optional[int] = Field(default=3, ge=1, le=5)
     pss4_piling_up: Optional[int] = Field(default=3, ge=1, le=5)
 
+    # Optional privacy and return tokens
+    anon_id: Optional[str] = None
+    return_code: Optional[str] = None
+
     @field_validator("sleep_mid_hrs")
     @classmethod
     def validate_sleep_hours(cls, v):
@@ -102,6 +106,53 @@ class PredictionResponse(BaseModel):
     model_used: str
     threshold: float
     disclaimer: str
+    model_version: Optional[str] = "v1.0"
+    prediction_id: Optional[int] = None
+    return_code: Optional[str] = None
+    anon_id: Optional[str] = None
+
+class ConsentRequest(BaseModel):
+    consent: bool = False
+
+class ConsentResponse(BaseModel):
+    anon_id: str
+    return_code: str
+    consent_given: bool
+    created_at: str
+    message: str
+
+class FeedbackRequest(BaseModel):
+    anon_id: Optional[str] = None
+    return_code: Optional[str] = None
+    prediction_id: Optional[int] = None
+    agreement: str = Field(..., pattern="^(Yes|No|Not sure)$", description="Yes / No / Not sure")
+    score_feels_right: Optional[str] = Field(default=None, pattern="^(Yes|No|Not sure)$")
+    comment: Optional[str] = Field(default=None, max_length=1000)
+
+class FeedbackResponse(BaseModel):
+    status: str
+    feedback_id: int
+    agreement: str
+    is_ground_truth: bool = False
+    message: str
+
+class OutcomeRequest(BaseModel):
+    return_code: str
+    bo1: int = Field(..., ge=1, le=5, description="Physically exhausted because of studies (1-5)")
+    bo2: int = Field(..., ge=1, le=5, description="Emotionally drained by college (1-5)")
+    bo3: int = Field(..., ge=1, le=5, description="Tired even after sleeping (1-5)")
+    bo4: int = Field(..., ge=1, le=5, description="Cannot cope with studies anymore (1-5)")
+    bo5: int = Field(..., ge=1, le=5, description="Less interested in studies than before (1-5)")
+    days_after_assessment: Optional[float] = Field(default=0.0, ge=0)
+
+class OutcomeResponse(BaseModel):
+    status: str
+    outcome_id: int
+    measured_score: float
+    measured_category: str
+    return_code: str
+    is_demo: bool
+    message: str
 
 class ScoreResponse(BaseModel):
     predicted_score: float

@@ -10,6 +10,7 @@ from typing import Dict, Any, Optional
 from . import config
 
 class ModelContainer:
+    active_version: str = "v1.0"
     pipe_rf: Any = None
     pipe_lr: Any = None
     reg_ols: Any = None
@@ -24,6 +25,19 @@ container = ModelContainer()
 
 def load_all_artifacts():
     print("Loading SmartPulse models and artifacts into memory...")
+    from .db import init_db, SessionLocal, ModelVersion
+    init_db()
+    
+    # Check active model version from database
+    db = SessionLocal()
+    try:
+        active_ver = db.query(ModelVersion).filter_by(is_active=True).first()
+        if active_ver:
+            container.active_version = active_ver.version
+    except Exception as e:
+        print("Database model version check error:", e)
+    finally:
+        db.close()
     
     # 1. Load trained sklearn pipelines
     container.pipe_rf = joblib.load(config.SAVED_MODELS_DIR / "pipe_rf.joblib")

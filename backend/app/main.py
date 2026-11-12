@@ -13,7 +13,9 @@ from .routers import (
     explain,
     stats,
     performance,
-    report
+    report,
+    validation,
+    admin
 )
 from . import config
 
@@ -48,6 +50,8 @@ app.include_router(explain.router)
 app.include_router(stats.router)
 app.include_router(performance.router)
 app.include_router(report.router)
+app.include_router(validation.router)
+app.include_router(admin.router)
 
 @app.get("/health")
 async def health_check():

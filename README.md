@@ -121,7 +121,15 @@ npm run build
 2. **Non-Causal Design:** The underlying dataset is cross-sectional. Observed relationships demonstrate statistical correlation; they do not prove that altering an isolated habit will mechanically reduce burnout.
 3. **Sample Characteristics:** The respondent pool ($N = 132$) is drawn predominantly from 2nd-year engineering hostel residents at a single institution.
 4. **Self-Report Bias:** Ordinal scales reflect respondent subjective perception rather than objective physiological tracking.
-5. **Privacy by Design:** Zero mandatory accounts or login credentials. Assessment answers are evaluated in-memory and discarded unless explicitly exported as a local PDF.
+5. **Privacy by Design:** No accounts are required. Research storage is opt-in and linked only to an anonymous ID/return code. Students can delete that record; feedback is subjective and never treated as ground truth.
+
+## Validation Center and Retraining
+
+- Set `ADMIN_TOKEN` to a long, private value before starting the backend. The Validation Center prompts for it; do not commit or share the token.
+- SQLite validation tables are created on backend startup (`backend/validation.db`). Back up this file as needed; schema changes currently use SQLAlchemy `create_all` and do not migrate existing schemas automatically.
+- Run a controlled candidate evaluation with `POST /api/admin/retrain` (admin token in `X-Admin-Token`). Candidates use the original training partition plus consented, verified, non-demo outcomes. The frozen original test partition is evaluation-only. Promotion/rejection reports are written under `docs/retraining-reports/`.
+- The Validation Center shows metrics only from measured outcomes. Student feedback is explicitly subjective. With no measured outcomes metrics say “Not yet established (n=0)”; low sample results remain preliminary.
+- Retraining evaluates on a small, single-institution frozen sample. It cannot establish external validity, clinical utility, causality, or performance for other student populations.
 
 ---
 
